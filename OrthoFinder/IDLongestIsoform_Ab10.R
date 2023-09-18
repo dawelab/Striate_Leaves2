@@ -1,4 +1,4 @@
-module load R/4.1.3-foss-2020b
+module load R/4.1.2-foss-2021b
 R 
 
 library(tidyr)
