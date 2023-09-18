@@ -12,7 +12,6 @@ do
 echo $i
 formatdb -p F -o T -i $DATA_DIR/$i"_v_B73.s.primQ20.gene1.fasta"
 blastall -p blastn -d $DATA_DIR/$i"_v_B73.s.primQ20.gene1.fasta" -i $OUT_DIR/CASP_cDNA.fasta -o  $OUT_DIR/BLAST_CASP_cDNA_v_primQ20$i.out -m 8
-blastall -p blastn -d $DATA_DIR/$i"_v_B73.s.primQ20.gene1.fasta" -i $OUT_DIR/Lasp_cDNA.fasta -o  $OUT_DIR/BLAST_Lasp_cDNA_v_primQ20$i.out -m 8
 blastall -p blastn -d $DATA_DIR/$i"_v_B73.s.primQ20.gene1.fasta" -i $OUT_DIR/Zm00001eb434490_T003_cDNA.fasta -o $OUT_DIR/BLAST_Zm00001eb434490_T003_cDNA_v_primQ20$i.out -m 8
 blastall -p blastn -d $DATA_DIR/$i"_v_B73.s.primQ20.gene1.fasta" -i $OUT_DIR/PosMu_cDNA.fasta -o  $OUT_DIR/BLAST_PosMu_cDNA_v_primQ20$i.out -m 8
 done
