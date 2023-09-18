@@ -153,7 +153,7 @@ B73_GFF_Heat_filt$seqname <- "N10"
 B73_GFF_Heat_filt$y <- 0.1
 B73_GFF_range <- toGRanges(B73_GFF_Heat_filt)
 
-#This reads in the bam file with the B73_N10 short read data
+#This reads in the bam file with the B73_N10 short read data. This file was generated in step 1.3
 BED <- read.delim("/Volumes/Transcend/BWAmem_B73.Ab10MAPQ20Prim.s.bam.bedgraph", header=FALSE)
 BED$V4 <- BED$V4/100
 xs=BED$V2
