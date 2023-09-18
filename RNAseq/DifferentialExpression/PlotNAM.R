@@ -2,6 +2,7 @@ library(reshape2)
 library(ggplot2)
 library(tidyverse)
 
+#This file comes from Yibing Zeng (included in repository under same name)
 DF <- read.csv("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/pan_32858_leaf_tpm.csv")
 SR <- read.csv("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/R_Sessions/Differential_Expression/SR2_TranscriptsPerMillion.csv")
 SR <- SR[,-c(1)]
