@@ -1,0 +1,12 @@
+module load seqkit/0.16.1
+
+DIR="/scratch/mjb51923/Striated/out/OrthoFinder"
+PROT="/scratch/mjb51923/annotations/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.protein.fa"
+
+while read i
+do
+seqkit faidx -r $PROT $i > $DIR/${i}_B73_protein.tmp.fasta
+done < $DIR/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.protei.GeneNamesLongest.txt
+
+cat $DIR/*_B73_protein.tmp.fasta > $DIR/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.protein.Longest.fa
+rm $DIR/*_B73_protein.tmp.fasta
