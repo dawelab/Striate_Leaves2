@@ -1,0 +1,43 @@
+library(tidyverse)
+
+sr2_1 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB125-1_v_B73.count")
+colnames(sr2_1) <- c("Name", "sr2_1")
+
+sr2_3 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB125-3_v_B73.count")
+colnames(sr2_3) <- c("Name", "sr2_3")
+
+sr2_4 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB125-4_v_B73.count")
+colnames(sr2_4) <- c("Name", "sr2_4")
+
+W22_1 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB129-1_v_B73.count")
+colnames(W22_1) <- c("Name", "W22_1")
+
+W22_2 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB129-2_v_B73.count")
+colnames(W22_2) <- c("Name", "W22_2")
+
+W22_3 <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10/MB129-3_v_B73.count")
+colnames(W22_3) <- c("Name", "W22_3")
+
+COUNTS <- cbind(sr2_1, sr2_3[,2], sr2_4[,2], W22_1[,2], W22_2[,2], W22_3[,2])
+
+LEN <- read.csv("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/R_Sessions/Differential_Expression/B73.all.csv")
+LEN_len <- LEN[,c(1,24)]
+colnames(LEN_len) <- c("Name", "length")
+
+COUNT_LEN <- merge(COUNTS, LEN_len, by="Name")
+
+colnames(COUNT_LEN) <- c("Name", "sr2_1", "sr2_3","sr2_4","W22_1", "W22_2", "W22_3", "length")
+
+COUNT_LEN$length_kb <- COUNT_LEN$length/1000
+COUNT_LEN_FIX <- drop_na(COUNT_LEN)
+
+
+tpm3 <- function(counts,len) {x <- counts/len
+  return(t(t(x)*1e6/colSums(x)))
+}
+
+TPM <- tpm3(COUNT_LEN_FIX[,2:7],COUNT_LEN_FIX$length_kb)
+TPM_DF <- as.data.frame(TPM)
+TPM_DF$Name <- COUNT_LEN_FIX$Name
+
+write.csv(TPM_DF, "SR2_TranscriptsPerMillion.csv")
