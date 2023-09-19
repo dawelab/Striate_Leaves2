@@ -94,7 +94,7 @@ for(i in NAMES) {
   CASP_temp2 <- CASP_temp1[Index,] 
   MERGE <- rbind(PosMu_temp1, CASP_temp2)
   MERGE_sort <- MERGE[order(MERGE$readID),]
-  write_csv(MERGE_sort, file=paste("ReadPairs_PosMuandSr", NAME, "csv", sep="_"))
+  write_csv(MERGE_sort, file=paste("ReadPairs_PosMuandCASP", NAME, "csv", sep="_"))
   READ_PAIRS <- length(unique(MERGE$readID))
   LINE <- data.frame(Name=NAME, ReadPairs=READ_PAIRS)
   DF <<- rbind(DF, LINE)
