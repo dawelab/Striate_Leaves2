@@ -76,3 +76,30 @@ for(i in NAMES) {
 }
 
 write.csv(DF, "ReadPairs_PosMuandSr_SummaryTable.csv")
+
+DF <- data.frame(Name = c(), ReadPairs = c())
+# "MB129-1", "MB129-2" "MB129-3" had no hits for CASP for PosMu so are excluded
+NAMES <- c("MB125-1", "MB125-3", "MB125-4")
+
+for(i in NAMES) {
+  NAME <- i
+  PosMu <- read.delim(paste("/Volumes/Transcend/BLAST_PosMu_cDNA_v_primQ20", NAME, ".out", sep=""), header=FALSE)
+  colnames(PosMu) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore")
+  CASP <- read.delim(paste("/Volumes/Transcend/BLAST_CASP_cDNA_v_primQ20", NAME, ".out", sep=""))
+  colnames(CASP) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore")
+  PosMu_temp1 <- separate(PosMu, sseqid, into=c("readID", "PairNum"), sep="/")
+  CASP_temp1 <- separate(CASP, sseqid, into=c("readID", "PairNum"), sep="/")
+  PosMu_READ_LIST <- unique(PosMu_temp1$readID)
+  Index <- which(CASP_temp1$readID %in% PosMu_READ_LIST)
+  CASP_temp2 <- CASP_temp1[Index,] 
+  MERGE <- rbind(PosMu_temp1, CASP_temp2)
+  MERGE_sort <- MERGE[order(MERGE$readID),]
+  write_csv(MERGE_sort, file=paste("ReadPairs_PosMuandSr", NAME, "csv", sep="_"))
+  READ_PAIRS <- length(unique(MERGE$readID))
+  LINE <- data.frame(Name=NAME, ReadPairs=READ_PAIRS)
+  DF <<- rbind(DF, LINE)
+}
+
+write.csv(DF, "ReadPairs_PosMuandCASP_SummaryTable.csv")
+
+
