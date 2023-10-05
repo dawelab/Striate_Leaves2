@@ -2,7 +2,6 @@ library(reshape2)
 library(ggplot2)
 library(tidyverse)
 
-#This file comes from Yibing Zeng (included in repository under same name)
 DF <- read.csv("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/pan_32858_leaf_tpm.csv")
 SR <- read.csv("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/R_Sessions/Differential_Expression/SR2_TranscriptsPerMillion.csv")
 SR <- SR[,-c(1)]
@@ -33,12 +32,14 @@ ALL <- rbind(DF_t, temp)
 ALL$NAM <- factor(ALL$NAM, levels=c("B73","B97","CML103","CML228","CML247","CML277","CML322","CML333","CML52","CML69","HP301","Il14H","Ki11", "Ki3", "Ky21", "M162W", "M37W", "Mo18W","Ms71", "NC350","NC358","Oh43","Oh7B","P39","Tx303","Tzi8","","sr2","W22"))
 
 #This plots the data
-png(filename="sr2_NAMLines_TPM_LeafTip_v2.png")
+pdf()
+pdf(file="sr2_NAMLines_TPM_LeafTip_v2.pdf", height = 10, width=10)
 a <- ggplot(ALL, aes(x=NAM)) +
   geom_bar(aes(y=tpm), position = 'dodge', stat="identity") +
   geom_text(aes(y=tpm, label=copynumber), position=position_dodge(width=0.9), vjust=-0.25) +
   xlab("Line") +
   geom_vline(mapping=aes(xintercept=27), color="blue")+
-  theme(plot.title = element_text(hjust=0.5, size = 18), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 15), axis.text = element_text(size = 12, angle = 90), legend.title = element_text(size = 15), legend.text = element_text(size = 12))
+  theme(plot.title = element_text(hjust=0.5, size = 18), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 25), axis.text = element_text(size = 20, angle = 90))
 a
 dev.off()
+
