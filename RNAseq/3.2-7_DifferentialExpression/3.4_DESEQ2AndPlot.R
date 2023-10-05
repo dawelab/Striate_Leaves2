@@ -6,7 +6,7 @@ setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10")
 directory <- "/Users/user/University_of_Georgia/Dawe_Lab_Documents/Striated/HTSeq_N10"
 
 
-BiocManager::install("DESeq2")
+#BiocManager::install("DESeq2")
 library("DESeq2")
 packageVersion("DESeq2")
 ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable, directory = directory, design= ~ condition)
@@ -92,12 +92,6 @@ df_row_dup_round$`adjusted p-value` <- round(df_row_dup$`adjusted p-value`, 4)
 #This normalizes the 
 ntd_dup <- normTransform(dds_dup)
 
-df <- as.data.frame(colData(dds_dup)[,c("condition")])
-rownames(df) <- c("sr2-1", "sr2-2", "sr2-3", "WT-1", "WT-2", "WT-3")
-colnames(df) <- "condition"
-df$condition <- c("striate leaves2", "striate leaves2","striate leaves2","wild type", "wild type", "wild type")
-
-
 df2<- as.data.frame(rowData(dds_dup))
 
 DATA <- as.data.frame(assay(ntd_dup))
@@ -108,10 +102,7 @@ FIX<- paste(NAMES, S, sep="\n")
 row.names(DATA) <- FIX
 colnames(DATA) <- c("sr2-1", "sr2-2", "sr2-3", "WT-1", "WT-2", "WT-3")
 
-# define the colours
-annoCol <-list(condition=c("striate leaves2"="white", "wild type"="forestgreen"))
-
 png(file="DeSEQ2_Chr10CRegionOfInterest.png")
 pheatmap(DATA, cluster_rows=FALSE, show_rownames=TRUE,
-         cluster_cols=FALSE, annotation_col=df, annotation_colors =annoCol)
+         cluster_cols=FALSE, annotation_colors =annoCol, fontsize = 20)
 dev.off()
